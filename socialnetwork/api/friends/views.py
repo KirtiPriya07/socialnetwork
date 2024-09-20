@@ -2,8 +2,6 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.db.models import Q
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from api.models import FriendRequest
 from socialnetwork.paginations import SocialNetworkPaginationClass
 from api.friends.serializers import SendFriendRequestsSerializer, ViewPendingRequestsSerializer, AcceptFriendRequestsSerializer, ViewFriendsSerializer

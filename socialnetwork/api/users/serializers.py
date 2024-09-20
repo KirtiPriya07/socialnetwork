@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from network.models import UserMaster
+from api.models import UserMaster
 from django.contrib.auth.hashers import make_password
-from social_network.tokens import get_access_token, get_refresh_token
+from socialnetwork.tokens import get_access_token, get_refresh_token
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True,max_length=25)
     confirm_password = serializers.CharField(required=True,max_length=25)
