@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "3356be80-a523-4d78-bc8f-f3effd2acf6c",
+		"name": "socialnetworkAPI_collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38500741"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"priya\",\r\n    \"email\": \"PRIYA@gmail.com\",\r\n    \"password\": \"admin\",\r\n    \"confirm_password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/signup/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"signup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwibmFtZSI6InByaXlhIiwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImV4cCI6MTcyNjk2MDQ3NCwianRpIjoiOTA3YmY0ODNlYTczNGNmMzliMTJmZGUzMjEyNTdlMmQifQ.CqGYYeKLKfxzHMgzZeyl5qvvdbENXZ-qJbZTRofNZ-k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"sent_to\": 1\r\n    \r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/send_request/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"send_request",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"priya@gmail.com\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pending requests",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoia2lydGkiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2OTYwODU4LCJqdGkiOiIzNDBmMGZkNjY2MDI0MTdkODBmMjBmYmQwNGQwMzQ2MSJ9.QI9FG4Wa8ZoI3BbNusTUfZ0pHASxk_FyotMwqo3JgE8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/pending_requests/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pending_requests",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reject request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoia2lydGkiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2OTYwODU4LCJqdGkiOiIzNDBmMGZkNjY2MDI0MTdkODBmMjBmYmQwNGQwMzQ2MSJ9.QI9FG4Wa8ZoI3BbNusTUfZ0pHASxk_FyotMwqo3JgE8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/reject_request/4/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"reject_request",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoia2lydGkiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2OTYwODU4LCJqdGkiOiIzNDBmMGZkNjY2MDI0MTdkODBmMjBmYmQwNGQwMzQ2MSJ9.QI9FG4Wa8ZoI3BbNusTUfZ0pHASxk_FyotMwqo3JgE8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/accept_request/6/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"accept_request",
+						"6",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Friend List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoia2lydGkiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2OTYwODU4LCJqdGkiOiIzNDBmMGZkNjY2MDI0MTdkODBmMjBmYmQwNGQwMzQ2MSJ9.QI9FG4Wa8ZoI3BbNusTUfZ0pHASxk_FyotMwqo3JgE8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/view_friends/5/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"view_friends",
+						"5",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoia2lydGkiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2OTYwODU4LCJqdGkiOiIzNDBmMGZkNjY2MDI0MTdkODBmMjBmYmQwNGQwMzQ2MSJ9.QI9FG4Wa8ZoI3BbNusTUfZ0pHASxk_FyotMwqo3JgE8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/users/?search=khushi",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "khushi"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

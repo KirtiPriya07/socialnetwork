@@ -1,15 +1,17 @@
-from django.shortcuts import render
+from rest_framework_extensions.cache.decorators import cache_response
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.db.models import Q
 from api.models import UserMaster
 from socialnetwork.paginations import SocialNetworkPaginationClass
 from socialnetwork.responses import http_200_response, http_201_response, http_400_response, http_500_response
 from api.users.serializers import UserRegistrationSerializer, UserLoginSerializer, UserLoginDataSerialzier, UserListSerializer
+from api.permissions import IsReadOnly, IsWrite, IsAdmin
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 # View for User Registration
 class SignUp(ModelViewSet):
-    """ This View is Used to Register User using Name, Email and Password """
     http_method_names = ['post']
     permission_classes = (AllowAny,)
     queryset = UserMaster.objects.all()
@@ -17,12 +19,11 @@ class SignUp(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         try:
-            serializer = self.serializer_class(data=request.data)  # deserializing payload
-            if serializer.is_valid():  # validating the data
-                serializer.save()  # saving the data to the DB
+            serializer = self.serializer_class(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
                 return http_201_response(message="User Registered Successfully!")
             else:
-                # Handling non-field-errors from serializer as well as custom validation errors
                 if list(serializer.errors.keys())[0] != "error":
                     return http_400_response(
                         message=f"{list(serializer.errors.keys())[0]} : {serializer.errors[list(serializer.errors.keys())[0]][0]}"
@@ -32,10 +33,8 @@ class SignUp(ModelViewSet):
         except Exception as e:
             return http_500_response(error=str(e))
 
-
 # View for User Login
 class Login(ModelViewSet):
-    """ This View is Used to Login Pre-Registered Users using email and password """
     http_method_names = ['post']
     permission_classes = (AllowAny,)
     queryset = UserMaster.objects.all()
@@ -43,13 +42,12 @@ class Login(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         try:
-            serializer = self.serializer_class(data=request.data)  # deserializing payload
-            if serializer.is_valid():  # validating data
-                user = serializer.validated_data[1]  # extracting user instance returned from serializer
-                login_data = UserLoginDataSerialzier(user).data  # passing instance to get login data like tokens
+            serializer = self.serializer_class(data=request.data)
+            if serializer.is_valid():
+                user = serializer.validated_data[1]
+                login_data = UserLoginDataSerialzier(user).data
                 return http_200_response(message="Login Success!", data=login_data)
             else:
-                # Handling non-field-errors from serializer as well as custom validation errors
                 if list(serializer.errors.keys())[0] != "error":
                     return http_400_response(
                         message=f"{list(serializer.errors.keys())[0]} : {serializer.errors[list(serializer.errors.keys())[0]][0]}"
@@ -59,10 +57,9 @@ class Login(ModelViewSet):
         except Exception as e:
             return http_500_response(error=str(e))
 
-
-# View for finding and listing users
+# View for finding and listing users with caching
 class FindUsers(ModelViewSet):
-    """ This View lists all users, filters them based on name or email """
+    """This View lists all users, filters them based on name or email."""
     http_method_names = ['get']
     permission_classes = (IsAuthenticated,)
     queryset = UserMaster.objects.all()
@@ -70,18 +67,30 @@ class FindUsers(ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         try:
-            users = UserMaster.objects.exclude(email=request.user.email)  # excluding logged-in user
-            search = request.query_params.get('search')  # reading search query parameter
+            users = UserMaster.objects.exclude(email=request.user.email)  # Exclude logged-in user
+            search = request.query_params.get('search')  # Read from query parameter
             if search:
-                users = users.filter(Q(name__icontains=search) | Q(email__iexact=search))  # filtering by name or email
-            serializer = self.serializer_class(users, many=True)  # serializing objects
-            paginator = SocialNetworkPaginationClass()  # initializing pagination class
-            page = paginator.paginate_queryset(serializer.data, request)
-            return paginator.get_paginated_response(page)  # returning response in pages
+                users = users.filter(Q(name__icontains=search) | Q(email__iexact=search))  # Filter users based on name or email
+            serializer = self.serializer_class(users, many=True)  # Serialize objects
+            paginator = SocialNetworkPaginationClass()  # Initialize pagination class
+            page = paginator.paginate_queryset(serializer.data, request) 
+            return paginator.get_paginated_response(page)  # Return response in pages
         except Exception as e:
-            return http_500_response(error=str(e))
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def retrieve(self, request, *args, **kwargs):
-        # This removes the retrieve method functionality, leaving it unimplemented.
-        pass
+        pass  # This method is intentionally left blank
 
+
+# Admin-only view for deleting users
+class AdminDeleteUser(ModelViewSet):
+    permission_classes = (IsAdmin,)  # Only 'Admin' users can delete users
+    queryset = UserMaster.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            instance.delete()
+            return http_200_response(message="User Deleted Successfully")
+        except Exception as e:
+            return http_500_response(error=str(e))
