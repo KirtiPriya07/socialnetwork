@@ -29,11 +29,26 @@ class UserMaster(AbstractUser):
     class Meta:
         db_table = "user_master"
 
+
+
 class FriendRequest(models.Model):
-    sent_to =  models.ForeignKey(UserMaster, on_delete=models.CASCADE, related_name = "sent_to")
-    sent_by =  models.ForeignKey(UserMaster, on_delete=models.CASCADE, related_name = "sent_by")
+    sent_to = models.ForeignKey(UserMaster, on_delete=models.CASCADE, related_name="sent_to")
+    sent_by = models.ForeignKey(UserMaster, on_delete=models.CASCADE, related_name="sent_by")
     status = models.CharField(max_length=10)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = "friend_requests"
+
+class BlockedUser(models.Model):
+    blocked_by = models.ForeignKey(UserMaster, on_delete=models.CASCADE, related_name="blocked_by")
+    blocked_user = models.ForeignKey(UserMaster, on_delete=models.CASCADE, related_name="blocked_user")
+    blocked_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "blocked_users"
+        unique_together = ('blocked_by', 'blocked_user')  # Prevent duplicate blocks
+
+    def __str__(self):
+        return f"{self.blocked_by.email} blocked {self.blocked_user.email}"

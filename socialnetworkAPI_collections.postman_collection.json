@@ -302,6 +302,87 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Block",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoicHJpeWEiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MDQxMjI4LCJqdGkiOiI3YzViNTA1OWNjMjI0NDljYTgyYThlMmUzYzNiMzg1ZiJ9.FKoWcUq74PY88F_n1484v5G2nAUj6B3dlhGJcSXWeg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"blocked_user\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/block_user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"block_user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unblock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoicHJpeWEiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MDQxMjI4LCJqdGkiOiI3YzViNTA1OWNjMjI0NDljYTgyYThlMmUzYzNiMzg1ZiJ9.FKoWcUq74PY88F_n1484v5G2nAUj6B3dlhGJcSXWeg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"blocked_user_id\" :3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/unblock_user/3/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"unblock_user",
+						"3",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
